@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='SimplexNoise',
-      version='0.1',
+      version='1.0',
       description='Simplex noise implementation',
       author='Brady Kieffer',
       author_email='bradykieffer@gmail.com',
