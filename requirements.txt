@@ -1,3 +1,9 @@
+cycler==0.10.0
+matplotlib==1.5.2
 numpy==1.11.1
 Pillow==3.3.1
--e git+git@github.com:BradyKieffer/SimplexNoise.git@52efe256d82392815f05cbc5c59d32a04ed653b6#egg=SimplexNoise
+pyparsing==2.1.8
+python-dateutil==2.5.3
+pytz==2016.6.1
+-e git+git@github.com:BradyKieffer/SimplexNoise.git@f33bfc3e9d9607738d3735e25b7f2a973862b46f#egg=SimplexNoise
+six==1.10.0
