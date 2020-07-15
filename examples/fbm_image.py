@@ -6,9 +6,9 @@ size = 250
 sn = SimplexNoise(num_octaves=7, persistence=0.1, dimensions=2)
 data = []
 
-for i in xrange(size):
+for i in range(size):
     data.append([])
-    for j in xrange(size):
+    for j in range(size):
         noise = normalize(sn.fractal(i, j, hgrid=size))
         data[i].append(noise * 255.0)
 
