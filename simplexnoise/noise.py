@@ -1,7 +1,7 @@
 from __future__ import division
 import math
 import random
-from geometry import Point
+from .geometry import Point
 
 # Constants to avoid magic numbers
 DEFAULT_NOISE_SCALE = -1  # Check noise_scale against this
@@ -41,17 +41,17 @@ class PerlinNoise(object):
         else:
             self.noise_scale = noise_scale
 
-        self.octaves = [PerlinNoiseOctave() for i in xrange(self.num_octaves)]
-        self.frequencies = [1.0 / pow(2, i) for i in xrange(self.num_octaves)]
+        self.octaves = [PerlinNoiseOctave() for i in range(self.num_octaves)]
+        self.frequencies = [1.0 / pow(2, i) for i in range(self.num_octaves)]
         self.amplitudes = [pow(persistence, len(self.octaves) - i)
-                           for i in xrange(self.num_octaves)]
+                           for i in range(self.num_octaves)]
 
     def noise(self, x):
         noise = [
             self.octaves[i].noise(
                 xin=x * self.frequencies[i],
                 noise_scale=self.noise_scale
-            ) * self.amplitudes[i] for i in xrange(self.num_octaves)]
+            ) * self.amplitudes[i] for i in range(self.num_octaves)]
 
         return sum(noise)
 
@@ -61,7 +61,7 @@ class PerlinNoise(object):
         frequency = 1.0 / hgrid
         amplitude = gain
 
-        for i in xrange(self.num_octaves):
+        for i in range(self.num_octaves):
             noise.append(
                 self.octaves[i].noise(
                     xin=x * frequency,
@@ -78,9 +78,9 @@ class PerlinNoise(object):
 class PerlinNoiseOctave(object):
 
     def __init__(self, num_shuffles=DEFAULT_SHUFFLES):
-        self.p_supply = [i for i in xrange(0, 256)]
+        self.p_supply = [i for i in range(0, 256)]
 
-        for i in xrange(num_shuffles):
+        for i in range(num_shuffles):
             random.shuffle(self.p_supply)
 
         self.perm = self.p_supply * 2
@@ -121,12 +121,12 @@ class SimplexNoise(object):
 
         if DIMENSIONS_2D == dimensions:
             self.octaves = [SimplexNoiseOctave2D()
-                            for i in xrange(self.num_octaves)]
+                            for i in range(self.num_octaves)]
             self.noise_scale = DEFAULT_2D_NOISE_SCALE
 
         elif DIMENSIONS_3D == dimensions:
             self.octaves = [SimplexNoiseOctave3D()
-                            for i in xrange(self.num_octaves)]
+                            for i in range(self.num_octaves)]
             self.noise_scale = DEFAULT_2D_NOISE_SCALE
 
         else:
@@ -137,9 +137,9 @@ class SimplexNoise(object):
         if DEFAULT_NOISE_SCALE != noise_scale:
             self.noise_scale = noise_scale
 
-        self.frequencies = [pow(2, i) for i in xrange(self.num_octaves)]
+        self.frequencies = [pow(2, i) for i in range(self.num_octaves)]
         self.amplitudes = [pow(persistence, len(self.octaves) - i)
-                           for i in xrange(self.num_octaves)]
+                           for i in range(self.num_octaves)]
 
     def noise(self, x=0, y=0, z=0):
         noise = [
@@ -148,7 +148,7 @@ class SimplexNoise(object):
                 yin=y / self.frequencies[i],
                 zin=z / self.frequencies[i],
                 noise_scale=self.noise_scale
-            ) * self.amplitudes[i] for i in xrange(self.num_octaves)]
+            ) * self.amplitudes[i] for i in range(self.num_octaves)]
 
         return sum(noise)
 
@@ -158,7 +158,7 @@ class SimplexNoise(object):
         frequency = 1.0 / hgrid
         amplitude = gain
 
-        for i in xrange(self.num_octaves):
+        for i in range(self.num_octaves):
             noise.append(
                 self.octaves[i].noise(
                     xin=x * frequency,
@@ -182,7 +182,7 @@ class SimplexNoiseOctave2D(object):
     unskew_factor = (3.0 - math.sqrt(3.0)) / 6.0
 
     def __init__(self, num_shuffles=DEFAULT_SHUFFLES):
-        self.p_supply = [i for i in xrange(0, 256)]
+        self.p_supply = [i for i in range(0, 256)]
 
         self.grads = [
             Point(1, 1, 0),
@@ -191,7 +191,7 @@ class SimplexNoiseOctave2D(object):
             Point(-1, -1, 0)
         ]
 
-        for i in xrange(num_shuffles):
+        for i in range(num_shuffles):
             random.shuffle(self.p_supply)
 
         self.perm = self.p_supply * 2
@@ -277,7 +277,7 @@ class SimplexNoiseOctave2D(object):
     def calc_noise_contributions(self, grad_index_hash, points_xy):
         """ Calculates the contribution from each corner (in 2D there are three!) """
         contribs = []
-        for i in xrange(len(grad_index_hash)):
+        for i in range(len(grad_index_hash)):
             x = points_xy[i].x
             y = points_xy[i].y
             grad = self.grads[grad_index_hash[i]]
@@ -299,7 +299,7 @@ class SimplexNoiseOctave3D(object):
     unskew_factor = 1.0 / 6.0
 
     def __init__(self, num_shuffles=DEFAULT_SHUFFLES):
-        self.p_supply = [i for i in xrange(0, 256)]
+        self.p_supply = [i for i in range(0, 256)]
 
         self.grads = [
             Point(1, 1, 0), Point(-1, 1, 0), Point(1, -1, 0), Point(-1, -1, 0),
@@ -307,7 +307,7 @@ class SimplexNoiseOctave3D(object):
             Point(0, 1, 1), Point(0, -1, 1), Point(0, 1, -1), Point(0, -1, -1),
         ]
 
-        for i in xrange(num_shuffles):
+        for i in range(num_shuffles):
             random.shuffle(self.p_supply)
 
         self.perm = self.p_supply * 2
@@ -412,7 +412,7 @@ class SimplexNoiseOctave3D(object):
     def calc_noise_contributions(self, grad_index_hash, points_xyz):
         """ Calculates the contribution from each corner (in 2D there are three!) """
         contribs = []
-        for i in xrange(len(grad_index_hash)):
+        for i in range(len(grad_index_hash)):
             x = points_xyz[i].x
             y = points_xyz[i].y
             z = points_xyz[i].z

@@ -7,9 +7,9 @@ noise_scale = 700.0 # Turns up the contrast
 sn = SimplexNoise(num_octaves=7, persistence=0.1, dimensions=2, noise_scale=noise_scale)
 data = []
 
-for i in xrange(size):
+for i in range(size):
     data.append([])
-    for j in xrange(size):
+    for j in range(size):
         noise = normalize(sn.noise(i, j))
         data[i].append(noise * 255.0)
 
